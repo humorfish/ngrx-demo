@@ -1,25 +1,55 @@
-import {Action} from '@ngrx/store';
-import {Book} from '../components/book';
+import * as book from '../actions/book';
 
-export const ADD_BOOK =             '[Collection] Add Book';
-export const ADD_BOOK_SUCCESS =     '[Collection] Add Book Success';
-export const ADD_BOOK_FAIL =        '[Collection] Add Book Fail';
-
-
-export class AddBookAction implements Action {
-    readonly type: string = ADD_BOOK;
-
-    constructor(public payload: Book) {}
+export interface State {
+	ids: string[];
+	loading: boolean;
+	query: string;
 }
 
-export class AddBookSuccessAction implements Action {
-    readonly type = ADD_BOOK_SUCCESS;
+const initialState: State = {
+	ids: [],
+	loading: false,
+	query: ''
+};
 
-    constructor(public payload: Book) { }
-  }
+export function reducer(state = initialState, action: book.Actions): State
+{
+	switch (action.type)
+	{
+		case book.SEARCH:
+		{
+			const query = action.payload;
+			if (query === '')
+			{
+				return {
+					ids: [],
+					loading: false,
+					query: null
+				};
+			}
 
-export class AddBookFailAction implements Action {
-    readonly type = ADD_BOOK_FAIL;
+			return Object.assign({}, state, {
+				query,
+				loading: true
+			});
+		}
 
-    constructor(public payload: Book) { }
+		case book.SEARCH_COMPLETE: {
+			const books = action.payload;
+
+			return {
+				ids: books.map(book => book.id),
+				loading: false,
+				query: state.query
+			};
+		}
+
+		default:
+			return state;
+	}
 }
+
+
+export const getIds = (state: State) => state.ids;
+export const getQuery = (state: State) => state.query;
+export const getLoading = (state: State) => state.loading;
