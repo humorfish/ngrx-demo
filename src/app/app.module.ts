@@ -1,7 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import {AppComponent} from './app.component';
 import {ComponentsModule} from './components';
@@ -18,14 +20,16 @@ import { reducer } from './reducers';
     AppComponent
   ],
   imports: [
-    BrowserModule,
+	BrowserModule,
+	BrowserAnimationsModule,
+	HttpClientModule,
     MaterialModule,
     ComponentsModule,
 	RouterModule.forRoot([], {useHash: true}),
 	StoreModule.forRoot(reducer),
 	DBModule.provideDB(schema),
   ],
-  providers: [HttpClient, GoogleBookService],
+  providers: [GoogleBookService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

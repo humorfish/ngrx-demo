@@ -2,7 +2,7 @@ import { Observable, empty, of } from 'rxjs';
 import {debounceTime, map, switchMap, skip, takeUntil} from 'rxjs/operators';
 
 import { Action } from '@ngrx/store';
-import { Effect, Actions, toPayload } from '@ngrx/effects';
+import { Effect, Actions } from '@ngrx/effects';
 import { GoogleBookService } from '../service/google-books';
 import * as book from '../actions/book';
 import { Injectable } from '@angular/core';
@@ -11,10 +11,10 @@ import { Injectable } from '@angular/core';
 export class BookEffects
 {
 	@Effect()
-	search$: Observable<Action> = this.actions$
+	search$: Observable<any> = this.actions$
 		.ofType(book.SEARCH)
 		.pipe(debounceTime(300))
-		.pipe(map(toPayload))
+		.pipe(map(action => (action as any).payload))
 		.pipe(switchMap((query: string) => {
 			if (query === '') {
 				return empty();
