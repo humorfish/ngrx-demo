@@ -1,13 +1,13 @@
 
 
-import { ActionReducer, combineReducers } from '@ngrx/store';
-import { routerReducer, RouterReducerState } from '@ngrx/router-store';
-import { compose } from '@ngrx/core/compose';
-import { createSelector } from 'reselect';
-import { storeFreeze } from 'ngrx-store-freeze';
+import {ActionReducer, combineReducers} from '@ngrx/store';
+import {routerReducer, RouterReducerState} from '@ngrx/router-store';
+import {compose} from '@ngrx/core/compose';
+import {createSelector} from 'reselect';
+import {storeFreeze} from 'ngrx-store-freeze';
 
 
-import { environment } from '../../environments/environment';
+import {environment} from '../../environments/environment';
 
 /**
  * Every reducer module's default export is the reducer function itself. In

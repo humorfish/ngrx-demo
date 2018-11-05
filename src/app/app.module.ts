@@ -22,18 +22,43 @@ import {BookExistsGuard} from './guards/book-exists';
 
 import {CollectionComp} from './pages/collection.comp';
 
+import {PagesModule} from './pages';
+import {FindBookComp} from './pages/find-book.comp';
+import {ViewBookComp} from './pages/view-book.comp';
+import {NotFoundComp} from './pages/not-found.comp';
+
+export const ROUTES = [
+	{
+		path: '',
+		component: CollectionComp
+	},
+	{
+		path: 'book/find',
+		component: FindBookComp
+	},
+	{
+		path: 'book/:id',
+		canActivate: [BookExistsGuard],
+		component: ViewBookComp
+	},
+	{
+		path: '**',
+		component: NotFoundComp
+	},
+];
+
 @NgModule({
   declarations: [
-	AppComponent,
-	CollectionComp
+	AppComponent
   ],
   imports: [
 	BrowserModule,
 	BrowserAnimationsModule,
 	HttpClientModule,
     MaterialModule,
-    ComponentsModule,
-	RouterModule.forRoot([], {useHash: true}),
+	ComponentsModule,
+	PagesModule,
+	RouterModule.forRoot(ROUTES, {useHash: true}),
 	StoreModule.forRoot(reducer),
 	EffectsModule.forRoot([BookEffects]),
 	EffectsModule.forRoot([CollectionEffects]),

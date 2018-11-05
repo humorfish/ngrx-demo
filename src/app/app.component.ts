@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {Store} from '@ngrx/store';
-
 import {Observable} from 'rxjs';
+
 import * as fromRoot from './reducers';
 import * as layout from './actions/layout';
 
